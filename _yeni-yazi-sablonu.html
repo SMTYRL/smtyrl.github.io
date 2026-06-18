@@ -4,60 +4,62 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- (1) Sekmede ve Google'da görünecek başlık. "— SMTYRL" kısmı kalsın. -->
+  <!-- (1) Sekmede/Google'da görünecek başlık. "— SMTYRL" kalsın. -->
   <title>YAZININ BAŞLIĞI — SMTYRL</title>
 
-  <!-- (2) Yazının tek cümlelik özeti (Google'da başlığın altında çıkar). -->
+  <!-- (2) Tek cümlelik özet. -->
   <meta name="description" content="Yazının kısa özetini buraya yaz.">
 
   <link rel="stylesheet" href="stil.css">
 </head>
 <body>
 
-  <!-- ↓↓↓ Bu blok her sayfada AYNI kalır, dokunma ↓↓↓ -->
-  <h1 class="site"><a href="index.html">SMTYRL</a></h1>
+  <!-- ↓↓↓ Bu blok her sayfada AYNI kalır ↓↓↓ -->
+  <div class="site"><a href="index.html">SMTYRL</a></div>
   <p class="tagline">Finansal çözümlemeler ve güncel konular üzerine yazılar</p>
   <nav class="top">
     <a href="index.html">Anasayfa</a>
     <a href="hakkinda.html">Hakkında</a>
   </nav>
-  <hr>
+  <hr class="rule">
   <!-- ↑↑↑ Buraya kadar aynı ↑↑↑ -->
 
-  <article class="letter">
+  <article>
 
-    <!-- (3) Yazının görünen başlığı -->
+    <!-- (3) Kategori etiketi (örn. Finans, Güncel, Deneme) -->
+    <span class="tag">Finans</span>
+
+    <!-- (4) Yazının görünen başlığı -->
     <h1>YAZININ BAŞLIĞI</h1>
 
-    <!-- (4) Ad · tarih · bölüm. Örnek: Samet Yaralı · 20 Haziran 2026 · Finansal Çözümlemeler -->
-    <p class="byline">Samet Yaralı · GG Ay YYYY · Bölüm</p>
+    <!-- (5) Künye: Ad · tarih -->
+    <p class="byline">Samet Yaralı · GG Ay YYYY</p>
 
-    <!-- (5) Yazının kendisi. Her paragrafı <p> ... </p> arasına koy. -->
+    <!-- (6) Yazının metni. Her paragrafı <p> ... </p> arasına koy. -->
     <p>
-      Birinci paragraf buraya. İstediğin kadar paragraf ekleyebilirsin;
-      her birini ayrı <p> ve </p> arasına yaz.
+      Birinci paragraf buraya.
     </p>
 
     <p>
       İkinci paragraf buraya.
     </p>
 
-    <!-- Ara başlık istersen (isteğe bağlı): -->
+    <!-- Ara başlık (isteğe bağlı): -->
     <h2>Ara Başlık</h2>
 
     <p>
       Ara başlıktan sonraki paragraf.
     </p>
 
-    <!-- Alıntı / vurgulu cümle istersen (isteğe bağlı): -->
+    <!-- Alıntı (isteğe bağlı): -->
     <blockquote>
-      Öne çıkarmak istediğin cümle buraya.
+      Öne çıkarmak istediğin cümle.
     </blockquote>
 
-    <!-- ↓ Bu uyarı kutusunu her finans yazısında bırakman iyi olur ↓ -->
+    <!-- Finans yazılarında bu uyarıyı bırakman iyi olur: -->
     <div class="disclaimer">
-      Bu yazı yalnızca bir fikir paylaşımıdır ve <strong>yatırım tavsiyesi
-      değildir</strong>.
+      Bu yazı yalnızca bir bilgilendirme ve fikir paylaşımıdır ve yatırım
+      tavsiyesi değildir.
     </div>
 
     <a class="back" href="index.html">← Tüm yazılar</a>
