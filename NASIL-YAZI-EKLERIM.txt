@@ -1,0 +1,74 @@
+============================================================
+ MÜTALAA — YENİ YAZI NASIL EKLENİR?  (basit rehber)
+============================================================
+
+Her yazı = bir HTML dosyası. Yeni yazı eklemek 4 adımdır.
+Hiçbir program yüklemene gerek yok; dosyaları çift tıklayıp
+tarayıcıda açarak her şeyi görebilirsin.
+
+
+ADIM 1 — Şablonu kopyala
+------------------------------------------------------------
+"_yeni-yazi-sablonu.html" dosyasına sağ tıkla > Kopyala,
+sonra aynı klasöre Yapıştır. ("..._sablonu - Kopya.html"
+oluşur.)
+
+
+ADIM 2 — Dosyanın adını değiştir
+------------------------------------------------------------
+Kopyanın adını, yazının konusuna göre değiştir.
+KURALLAR:
+  - sadece küçük harf
+  - boşluk yerine tire (-)
+  - Türkçe harf KULLANMA (ç,ğ,ş,ı,ö,ü yerine c,g,s,i,o,u)
+  - sonu ".html" ile bitsin
+
+Örnek:  enflasyon-muhasebesi.html
+Örnek:  faiz-karari.html
+
+
+ADIM 3 — İçini doldur
+------------------------------------------------------------
+Dosyaya sağ tıkla > Birlikte aç > Not Defteri
+(ya da VS Code). İçinde (1)...(5) diye numaralı
+yerler var. Sadece BÜYÜK HARFLE yazılı kısımları
+kendi yazınla değiştir:
+
+  (1) <title>      -> sekme/Google başlığı
+  (3) <h1>         -> yazının görünen başlığı
+  (4) byline       -> tarih · bölüm
+  (5) <p>...</p>   -> yazının metni (her paragraf ayrı <p>)
+
+Kaydet. Dosyaya çift tıklayıp tarayıcıda nasıl
+göründüğüne bak.
+
+
+ADIM 4 — Ana sayfaya listele
+------------------------------------------------------------
+"index.html" dosyasını Not Defteri ile aç.
+İçinde şuna benzeyen bir blok bulacaksın:
+
+  <li>
+    <a href="guvenlik-marji.html">Güvenlik Marjı: ...</a>
+    <span class="date">— 8 Haziran 2026</span>
+    <span class="dek">Kısa özet...</span>
+  </li>
+
+Bunu kopyala, doğru bölümün altına yapıştır ve 3 yeri
+yeni yazına göre düzelt:
+  - href="..."     -> ADIM 2'de verdiğin dosya adı
+  - <a>...</a>     -> başlık
+  - date / dek     -> tarih ve kısa özet
+
+Kaydet. index.html'i tarayıcıda aç — yeni yazın listede!
+
+
+İPUCU
+------------------------------------------------------------
+- Adı "_" ile başlayan dosya (şablon) sitede görünmez,
+  sadece senin için durur. Silme.
+- "arsiv-zarif" klasörü eski/yedek tasarımdır, dokunmasan
+  da olur.
+- Bir şeyi bozarsam diye korkma: dosyayı kapatıp kaydetmezsen
+  hiçbir değişiklik olmaz.
+============================================================

@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Yazı Paneli — SMTYRL</title>
+  <link rel="stylesheet" href="stil.css">
+  <style>
+    body{ max-width:1040px; }
+    .pnl-h{ text-align:center; font-size:26px; margin:10px 0 2px; }
+    .pnl-sub{ text-align:center; color:#555; font-style:italic; margin:0 0 24px; font-size:16px; }
+    .grid{ display:grid; grid-template-columns:1fr 1fr; gap:28px; align-items:start; }
+    .grid > *{ box-sizing:border-box; }
+    label{ display:block; font-size:14px; color:#333; margin:14px 0 4px; font-family:Arial,sans-serif; }
+    input, textarea, select{
+      box-sizing:border-box; width:100%;
+      font-family:Arial, sans-serif; font-size:15px;
+      padding:8px 10px; border:1px solid #999; border-radius:0; background:#fff; color:#111;
+    }
+    textarea{ min-height:300px; line-height:1.5; resize:vertical; }
+    .hint{ font-family:Arial,sans-serif; font-size:12px; color:#777; margin-top:4px; }
+    .row2{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    .pv-label{ font-family:Arial,sans-serif; font-size:13px; color:#777; text-transform:uppercase; letter-spacing:.08em; margin-bottom:8px; }
+    .preview{ border:1px solid #ccc; padding:18px 20px; background:#fff; }
+    .actions{ margin-top:18px; padding-top:16px; border-top:1px solid #000; }
+    button{
+      font-family:Arial,sans-serif; font-size:15px; cursor:pointer;
+      padding:10px 16px; border:1px solid #000; background:#fff; color:#000; border-radius:0;
+      margin:0 8px 8px 0;
+    }
+    button:hover{ background:#f2f2f2; }
+    .ok{ font-family:Arial,sans-serif; font-size:13px; color:#0a7d28; margin-left:6px; }
+    .libox{ font-family:"Courier New",monospace; font-size:13px; min-height:120px; }
+    .steps{ font-family:Arial,sans-serif; font-size:13px; color:#444; line-height:1.7; background:#fafafa; border:1px solid #ddd; padding:12px 14px; margin-top:14px; }
+    @media (max-width:760px){ .grid{ grid-template-columns:1fr; } body{ max-width:720px; } }
+  </style>
+</head>
+<body>
+
+  <div class="pnl-h">✎ Yazı Paneli</div>
+  <p class="pnl-sub">Forma yaz → canlı önizle → indir + satırı kopyala. HTML bilmene gerek yok.</p>
+
+  <div class="grid">
+
+    <!-- SOL: form -->
+    <div>
+      <label for="title">Başlık</label>
+      <input id="title" placeholder="örn. Beta Katsayısı Nedir?">
+
+      <label for="dek">Kısa özet (ana sayfada başlığın altında çıkar)</label>
+      <input id="dek" placeholder="Tek cümlelik özet">
+
+      <div class="row2">
+        <div>
+          <label for="date">Tarih</label>
+          <input id="date">
+        </div>
+        <div>
+          <label for="section">Bölüm</label>
+          <select id="section">
+            <option>Finansal Çözümlemeler</option>
+            <option>Güncel &amp; Fikir</option>
+            <option>Defterden Notlar</option>
+          </select>
+        </div>
+      </div>
+
+      <label for="fname">Dosya adı</label>
+      <input id="fname" placeholder="otomatik oluşur">
+      <div class="hint">Başlıktan otomatik üretilir; istersen değiştir (küçük harf, tire, .html).</div>
+
+      <label for="body">Yazının metni</label>
+      <textarea id="body" placeholder="Paragrafları boş satırla ayır.
+
+Ara başlık için satıra:  ## Ara Başlık
+Alıntı için satıra:  &gt; alıntı cümlesi"></textarea>
+      <div class="hint">Boş satır = yeni paragraf · <b>## </b> = ara başlık · <b>&gt; </b> = alıntı</div>
+    </div>
+
+    <!-- SAĞ: önizleme + çıktı -->
+    <div>
+      <div class="pv-label">Canlı önizleme</div>
+      <div class="preview">
+        <article class="letter" id="preview"></article>
+      </div>
+
+      <div class="actions">
+        <button id="dl">⬇ Yazı dosyasını indir</button>
+        <span class="ok" id="dlOk"></span>
+        <label for="libox" style="margin-top:14px;">Ana sayfa satırı (index.html'e ekle)</label>
+        <textarea class="libox" id="libox" readonly></textarea>
+        <button id="copy">📋 Satırı kopyala</button>
+        <span class="ok" id="copyOk"></span>
+
+        <div class="steps">
+          <b>Yayınlamak için (2 adım):</b><br>
+          1) <b>İndir</b>'e bas → inen dosyayı <b>smtyrl</b> klasörüne taşı.<br>
+          2) <b>Satırı kopyala</b> → <b>index.html</b>'de <code>&lt;ul class="posts"&gt;</code> satırının hemen altına yapıştır, kaydet.
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    var aylar = ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
+    var T = document.getElementById('title'),
+        D = document.getElementById('dek'),
+        DT = document.getElementById('date'),
+        S = document.getElementById('section'),
+        F = document.getElementById('fname'),
+        B = document.getElementById('body'),
+        PV = document.getElementById('preview'),
+        LI = document.getElementById('libox');
+
+    (function(){ var d = new Date(); DT.value = d.getDate() + ' ' + aylar[d.getMonth()] + ' ' + d.getFullYear(); })();
+
+    function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+    function slug(s){
+      var map = {'ç':'c','ğ':'g','ı':'i','İ':'i','ö':'o','ş':'s','ü':'u','Ç':'c','Ğ':'g','Ö':'o','Ş':'s','Ü':'u'};
+      s = (s||'').replace(/[çğıİöşüÇĞÖŞÜ]/g, function(m){ return map[m]; });
+      return s.toLowerCase().replace(/[^a-z0-9\s-]/g,'').trim().replace(/\s+/g,'-').replace(/-+/g,'-');
+    }
+
+    function bodyHtml(text){
+      var blocks = (text||'').trim().split(/\n\s*\n/);
+      if(blocks.length === 1 && blocks[0] === '') return '';
+      return blocks.map(function(bl){
+        bl = bl.trim();
+        if(bl.indexOf('## ') === 0) return '    <h2>' + esc(bl.slice(3).trim()) + '</h2>';
+        if(bl.indexOf('> ') === 0)  return '    <blockquote>' + esc(bl.slice(2).trim()) + '</blockquote>';
+        return '    <p>' + esc(bl.replace(/\s*\n\s*/g, ' ')) + '</p>';
+      }).join('\n\n');
+    }
+
+    function articleInner(){
+      var title = T.value.trim() || 'Başlık';
+      var byline = 'Samet Yaralı · ' + (DT.value.trim() || '') + ' · ' + S.value;
+      return '<h1>' + esc(title) + '</h1>\n' +
+             '    <p class="byline">' + esc(byline) + '</p>\n\n' +
+             bodyHtml(B.value) + '\n\n' +
+             '    <div class="disclaimer">\n      Bu yazı yalnızca bir bilgilendirme ve fikir paylaşımıdır ve <strong>yatırım tavsiyesi değildir</strong>.\n    </div>\n\n' +
+             '    <a class="back" href="index.html">← Tüm yazılar</a>';
+    }
+
+    function fullPage(){
+      return '<!doctype html>\n<html lang="tr">\n<head>\n' +
+        '  <meta charset="utf-8">\n  <meta name="viewport" content="width=device-width, initial-scale=1">\n' +
+        '  <title>' + esc(T.value.trim() || 'Yazı') + ' — SMTYRL</title>\n' +
+        '  <meta name="description" content="' + esc(D.value.trim()) + '">\n' +
+        '  <link rel="stylesheet" href="stil.css">\n</head>\n<body>\n\n' +
+        '  <h1 class="site"><a href="index.html">SMTYRL</a></h1>\n' +
+        '  <p class="tagline">Finansal çözümlemeler ve güncel konular üzerine yazılar</p>\n' +
+        '  <nav class="top">\n    <a href="index.html">Anasayfa</a>\n    <a href="hakkinda.html">Hakkında</a>\n  </nav>\n\n' +
+        '  <hr>\n\n  <article class="letter">\n    ' + articleInner() + '\n  </article>\n\n' +
+        '  <footer>\n    © 2026 SMTYRL\n  </footer>\n\n</body>\n</html>\n';
+    }
+
+    function liSnippet(){
+      var f = (F.value.trim() || (slug(T.value) + '.html'));
+      if(f.indexOf('.html') === -1) f += '.html';
+      return '    <li>\n' +
+             '      <a href="' + f + '">' + esc(T.value.trim() || 'Başlık') + '</a>\n' +
+             '      <span class="date">— ' + esc(DT.value.trim()) + '</span>\n' +
+             '      <span class="dek">' + esc(D.value.trim()) + '</span>\n' +
+             '    </li>';
+    }
+
+    function refresh(){
+      PV.innerHTML = articleInner();
+      LI.value = liSnippet();
+    }
+
+    [T,D,DT,S,B].forEach(function(el){ el.addEventListener('input', function(){
+      if(document.activeElement !== F) F.value = slug(T.value) + '.html';
+      refresh();
+    }); });
+    F.addEventListener('input', refresh);
+
+    document.getElementById('dl').addEventListener('click', function(){
+      var f = (F.value.trim() || (slug(T.value) + '.html'));
+      if(f.indexOf('.html') === -1) f += '.html';
+      var blob = new Blob([fullPage()], {type:'text/html;charset=utf-8'});
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob); a.download = f;
+      document.body.appendChild(a); a.click(); a.remove();
+      document.getElementById('dlOk').textContent = '✓ indirildi: ' + f;
+    });
+
+    document.getElementById('copy').addEventListener('click', function(){
+      LI.select();
+      var done = false;
+      try { if(navigator.clipboard){ navigator.clipboard.writeText(LI.value); done = true; } } catch(e){}
+      if(!done){ try { document.execCommand('copy'); done = true; } catch(e){} }
+      document.getElementById('copyOk').textContent = done ? '✓ kopyalandı' : 'kutudan elle kopyala';
+    });
+
+    refresh();
+  </script>
+
+</body>
+</html>

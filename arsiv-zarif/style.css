@@ -1,0 +1,211 @@
+/* ============================================================
+   MÜTALAA — minimalist finans & fikir yazıları
+   Tek dosya, sıfır bağımlılık. Renkleri/fontu aşağıdaki
+   değişkenlerden değiştirebilirsin.
+   ============================================================ */
+
+:root{
+  --paper:    #FFF1E5;   /* FT-pembesi kâğıt tonu          */
+  --paper-2:  #FBE7D4;   /* hafif vurgulu blok arka planı  */
+  --ink:      #2B2520;   /* gövde mürekkebi                */
+  --ink-soft: #6E6358;   /* tarih / üst-veri / ikincil     */
+  --accent:   #990F3D;   /* bordo (claret) vurgu           */
+  --accent-2: #C24668;
+  --rule:     #E6D8C7;   /* ince ayraç çizgisi             */
+  --measure:  660px;     /* okuma kolonu genişliği         */
+
+  --serif: "Newsreader", Georgia, "Times New Roman", serif;
+  --mono:  "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+/* Karanlık mod — sistem tercihine göre, otomatik (JS yok) */
+@media (prefers-color-scheme: dark){
+  :root{
+    --paper:    #17140F;
+    --paper-2:  #1F1B14;
+    --ink:      #ECE3D6;
+    --ink-soft: #9C9183;
+    --accent:   #E26C8C;
+    --accent-2: #F0A6BC;
+    --rule:     #322C23;
+  }
+}
+
+*{ box-sizing:border-box; }
+html{ -webkit-text-size-adjust:100%; }
+
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--serif);
+  font-size:20px;
+  line-height:1.65;
+  font-optical-sizing:auto;
+  text-rendering:optimizeLegibility;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* Çok hafif kâğıt dokusu */
+body::before{
+  content:"";
+  position:fixed; inset:0;
+  z-index:1; pointer-events:none; opacity:.04;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.wrap{
+  position:relative; z-index:2;
+  max-width:820px;
+  margin:0 auto;
+  padding:0 28px;
+}
+
+a{ color:var(--accent); text-decoration:none; }
+a:hover{ color:var(--accent-2); }
+
+/* ---------- Başlık / künye ---------- */
+.masthead{ padding:56px 0 0; text-align:center; }
+.kicker-top{
+  font-family:var(--mono);
+  font-size:11px; letter-spacing:.30em; text-transform:uppercase;
+  color:var(--ink-soft);
+}
+.masthead .title{
+  font-size:clamp(42px, 9vw, 76px);
+  font-weight:500; letter-spacing:.02em; line-height:1;
+  margin:.20em 0 .12em;
+}
+.masthead .title a{ color:var(--ink); }
+.masthead .sub{ font-style:italic; color:var(--ink-soft); font-size:19px; }
+
+hr.rule-accent{ height:2px; background:var(--accent); border:0; margin:24px 0 0; }
+hr.rule-hair{ height:1px; background:var(--rule); border:0; margin:0; }
+
+nav.main{
+  display:flex; gap:30px; justify-content:center;
+  font-family:var(--mono);
+  font-size:12px; letter-spacing:.14em; text-transform:uppercase;
+  padding:16px 0;
+}
+nav.main a{ color:var(--ink); }
+nav.main a:hover{ color:var(--accent); }
+
+/* ---------- Yazı listesi (anasayfa) ---------- */
+.section-label{
+  font-family:var(--mono);
+  font-size:12px; letter-spacing:.22em; text-transform:uppercase;
+  color:var(--accent);
+  margin:50px 0 6px;
+}
+
+.entry{
+  display:grid; grid-template-columns:96px 1fr; gap:24px;
+  padding:24px 0; border-top:1px solid var(--rule);
+  opacity:0; transform:translateY(10px);
+  animation:rise .6s cubic-bezier(.2,.7,.3,1) forwards;
+}
+.entry .date{
+  font-family:var(--mono);
+  font-size:12.5px; letter-spacing:.02em; color:var(--ink-soft);
+  padding-top:8px;
+}
+.entry h2{ margin:0 0 5px; font-weight:500; font-size:25px; line-height:1.22; }
+.entry h2 a{
+  color:var(--ink);
+  background-image:linear-gradient(var(--accent),var(--accent));
+  background-size:0% 1px; background-repeat:no-repeat; background-position:0 100%;
+  transition:background-size .35s ease, color .2s;
+  padding-bottom:1px;
+}
+.entry h2 a:hover{ color:var(--accent); background-size:100% 1px; }
+.entry .dek{ color:var(--ink-soft); font-size:18px; font-style:italic; }
+
+.entry:nth-child(1){ animation-delay:.04s; }
+.entry:nth-child(2){ animation-delay:.10s; }
+.entry:nth-child(3){ animation-delay:.16s; }
+.entry:nth-child(4){ animation-delay:.22s; }
+.entry:nth-child(5){ animation-delay:.28s; }
+.entry:nth-child(6){ animation-delay:.34s; }
+
+@keyframes rise{ to{ opacity:1; transform:none; } }
+@media (prefers-reduced-motion:reduce){
+  .entry{ opacity:1; transform:none; animation:none; }
+}
+
+/* ---------- Makale ---------- */
+article{ padding:34px 0 0; }
+.measure{ max-width:var(--measure); margin:0 auto; }
+
+.kicker{
+  font-family:var(--mono);
+  font-size:12px; letter-spacing:.22em; text-transform:uppercase;
+  color:var(--accent);
+}
+article h1{
+  font-size:clamp(30px, 6vw, 47px);
+  font-weight:500; line-height:1.12; letter-spacing:.01em;
+  margin:.28em 0 .35em;
+}
+.byline{
+  font-family:var(--mono);
+  font-size:12.5px; letter-spacing:.03em; color:var(--ink-soft);
+}
+
+.article-body{ margin-top:34px; }
+.article-body p{ margin:0 0 1.25em; }
+.article-body > p:first-of-type::first-letter{
+  float:left; font-size:3.5em; line-height:.78;
+  padding:.02em .09em 0 0; color:var(--accent); font-weight:500;
+}
+.article-body h2{
+  font-weight:600; font-size:23px; letter-spacing:.005em;
+  margin:1.9em 0 .45em;
+}
+.pull{
+  font-size:26px; line-height:1.35; font-style:italic; color:var(--ink);
+  border-left:2px solid var(--accent);
+  margin:1.5em 0; padding:.15em 0 .15em 26px;
+}
+.pull cite{ display:block; font-size:13px; font-style:normal;
+  font-family:var(--mono); color:var(--ink-soft); letter-spacing:.04em; margin-top:10px; }
+
+/* Rakam / oran / sembol — finans için mono */
+.fig{ font-family:var(--mono); font-size:.92em; letter-spacing:-.01em; }
+
+.disclaimer{
+  font-family:var(--mono);
+  font-size:12.5px; line-height:1.65; color:var(--ink-soft);
+  background:var(--paper-2); border:1px solid var(--rule);
+  padding:16px 18px; margin:42px 0;
+}
+.footnotes{
+  font-size:15px; color:var(--ink-soft);
+  border-top:1px solid var(--rule); margin-top:42px; padding-top:18px;
+}
+.footnotes p{ margin:0 0 .5em; }
+sup a{ font-family:var(--mono); font-size:.66em; }
+
+.back{
+  display:inline-block; margin-top:8px;
+  font-family:var(--mono);
+  font-size:12px; letter-spacing:.14em; text-transform:uppercase;
+}
+
+/* ---------- Alt bilgi ---------- */
+footer{
+  position:relative; z-index:2;
+  max-width:820px; margin:72px auto 0; padding:24px 28px 64px;
+  border-top:2px solid var(--accent);
+  font-family:var(--mono);
+  font-size:11.5px; letter-spacing:.04em; line-height:1.9;
+  color:var(--ink-soft); text-align:center;
+}
+footer a{ color:var(--ink-soft); text-decoration:underline; }
+
+/* ---------- Dar ekran ---------- */
+@media (max-width:560px){
+  body{ font-size:18px; }
+  .entry{ grid-template-columns:1fr; gap:5px; }
+  .entry .date{ padding-top:0; }
+}

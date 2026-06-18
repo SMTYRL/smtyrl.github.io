@@ -1,0 +1,118 @@
+/* ============================================================
+   SMTYRL — düz / sade stil (Berkshire Hathaway tarzı)
+   Tek dosya. Tüm sayfalar bunu kullanır.
+   Bir şeyi değiştirmek istersen aşağıdaki değerleri düzenle.
+   ============================================================ */
+
+body{
+  background:#ffffff;
+  color:#111111;
+  font-family:"Times New Roman", Times, Georgia, serif;
+  font-size:19px;
+  line-height:1.65;
+  max-width:720px;       /* okuma kolonu genişliği */
+  margin:0 auto;
+  padding:48px 22px 90px;
+}
+
+/* Bağlantılar — klasik mavi */
+a{ color:#0b0bbf; }
+a:visited{ color:#551a8b; }
+a:hover{ color:#cc0000; }
+
+/* Site başlığı / künye — ortalanmış (her sayfanın tepesi) */
+h1.site{ font-size:28px; margin:0 0 4px; letter-spacing:.12em; text-align:center; }
+h1.site a{ color:#111111; text-decoration:none; }
+.tagline{ font-style:italic; color:#555555; font-size:17px; text-align:center; margin:0 0 10px; }
+
+nav.top{ margin:10px 0 0; font-size:16px; text-align:center; }
+nav.top a{ margin:0 10px; }
+
+hr{ border:0; border-top:1px solid #000000; margin:22px 0; }
+
+/* Ana sayfadaki yazı listesi */
+.section{ font-weight:bold; font-size:17px; color:#333333; margin:32px 0 8px; }
+ul.posts{ list-style:none; margin:0; padding:0; }
+ul.posts li{ margin:16px 0; }
+ul.posts a{ font-size:20px; }
+ul.posts .date{ color:#555555; font-size:14px; }
+ul.posts .dek{ color:#444444; font-style:italic; font-size:16px; display:block; margin-top:3px; }
+
+/* Yazı (makale) sayfası */
+article h1{ font-size:29px; line-height:1.22; margin:22px 0 6px; }
+.byline{ color:#555555; font-size:14px; margin:0 0 28px; }
+article p{ margin:0 0 1.15em; }
+article h2{ font-size:21px; margin:1.7em 0 .4em; }
+blockquote{
+  border-left:3px solid #cccccc; margin:1.4em 0;
+  padding:2px 0 2px 18px; font-style:italic; color:#333333;
+}
+
+.disclaimer{
+  font-size:14px; color:#555555; line-height:1.6;
+  border:1px solid #dddddd; background:#fafafa;
+  padding:12px 16px; margin:34px 0;
+}
+
+.back{ display:inline-block; margin-top:6px; font-size:17px; }
+
+footer{
+  border-top:1px solid #000000; margin-top:44px; padding-top:14px;
+  font-size:14px; color:#555555;
+}
+
+/* ---- küçük dokunuşlar / okuma rahatlığı ---- */
+
+/* Başlıklarda tek başına kalan öksüz kelimeyi önler */
+h1.site, article h1, article h2, .section{ text-wrap:balance; }
+
+/* Metni seçince sıcak bir vurgu */
+::selection{ background:#f3e7cf; }
+
+/* Klavyeyle gezenler için görünür odak çerçevesi */
+a:focus-visible{ outline:2px solid #0b0bbf; outline-offset:2px; border-radius:1px; }
+
+/* Yazıyı kâğıda dökünce temiz görünsün */
+@media print{
+  nav.top, .back, .disclaimer{ display:none; }
+  a{ color:#000000; text-decoration:none; }
+  body{ font-size:12pt; max-width:none; padding:0; }
+}
+
+/* ============================================================
+   MEKTUP STİLİ — Berkshire Hathaway yazılarındaki gibi.
+   Sadece yazı sayfalarında geçerli: <article class="letter">
+   Başlık ortada (serif, koyu), gövde daktilo (Courier).
+   ============================================================ */
+
+/* Başlık ve künye — ortalı */
+article.letter h1{
+  text-align:center;
+  font-size:26px; line-height:1.25;
+  margin:26px 0 4px;
+}
+article.letter .byline{
+  text-align:center;
+  font-style:italic; font-size:15px;
+}
+
+/* Gövde — daktilo (monospace), internet için biraz büyük.
+   .byline (künye) hariç: o serif-italik ve ortalı kalır. */
+article.letter p:not(.byline),
+article.letter h2,
+article.letter blockquote{
+  font-family:"Courier New", Courier, monospace;
+}
+article.letter p:not(.byline){
+  font-size:17px; line-height:1.6;
+  margin:0 0 .9em;
+  text-indent:2.5em;        /* paragraf başı girintisi (mektup havası) */
+}
+article.letter h2{
+  font-size:18px; font-weight:bold;
+  text-align:center; text-indent:0;
+  margin:1.9em 0 .7em;
+}
+article.letter blockquote{
+  font-size:16px; line-height:1.55;
+}
